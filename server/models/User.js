@@ -80,7 +80,7 @@ userSchema.statics.findByToken = function (token, cb){
         // DB에서 해당 token 찾기
         user.findOne({"_id" : decoded, "token": token}, function (err, user){
             if (err) return cb(err);
-            cb(unll, user);
+            cb(null, user);
         })
     })
 }

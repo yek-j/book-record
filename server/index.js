@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require("./config/key");
 const {User} = require("./models/User");
+const {auth} = require("./middleware/auth");
 const { response } = require('express');
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -63,6 +64,30 @@ app.post('/users/register', (req, res) => {
         })
     });
 })
+
+app.get('/users/auth', auth, (req,res) => {
+    res.status(200).json({
+        _id: req.user._id,
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        role: req.user.role,
+        image: req.user.image
+    })
+})
+
+// 로그아웃 auth에서 인증 후 user를 가져온다
+app.get('/users/logout', auth, (req, res) => {
+    User.findOneAndUpdate({_id: req.user._id}, 
+      {token: ""},
+      (err, user) => {
+        if(err) return res.json({success: false, err});
+        return res.status(200).send({
+          success: true
+        })
+      })
+  })
 
 app.listen(port, () => {
     console.log(`Start... http://localhost:${port}`);
