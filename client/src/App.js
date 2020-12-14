@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import MainPage from './components/MainPage/MainPage';
 
 
 function App() {
@@ -12,10 +13,8 @@ function App() {
     <div>
       {}
       <Switch>
-        <Route exact path="/" component={Auth(LandingPage, null) } />
-        <Route exact path="/login" component={Auth(LoginPage, false)} />
-        <Route exact path="/register" component={Auth(RegisterPage, false)} />
-        <Route exact path="/mybook" component={Auth(MyBookPage, true)} />
+        <Route exact path="/" component={MainPage} />
+      
       </Switch>
     </div>
   </Router>
