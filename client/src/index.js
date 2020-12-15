@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import promisMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-import { Typography } from "@material-ui/core"
 
 const createStoreWithMiddleware = applyMiddleware(promisMiddleware, ReduxThunk)(createStore);
 
