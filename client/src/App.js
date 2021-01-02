@@ -9,7 +9,7 @@ import NavBar from './components/NavBar/NavBar';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import Container from '@material-ui/core/Container';
-
+import Auth from './hoc/auth';
 
 function App() {
   return (
@@ -20,9 +20,9 @@ function App() {
       <NavBar/>
       <Container>
         <Switch>
-          <Route exact path="/" component={MainPage} /> 
-          <Route exact path="/login" component={LoginPage} />  
-          <Route exact path="/register" component={RegisterPage} />  
+          <Route exact path="/" component={Auth(MainPage, null)} /> 
+          <Route exact path="/login" component={Auth(LoginPage, false)} />  
+          <Route exact path="/register" component={Auth(RegisterPage, false)} />  
         </Switch>
       </Container>
     </div>

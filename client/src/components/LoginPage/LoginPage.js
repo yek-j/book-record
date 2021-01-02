@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react'
+import {useDispatch} from 'react-redux';
+import {loginUser} from '../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -25,15 +27,33 @@ const useStyles = makeStyles((theme) => ({
 function LoginPage(props) {
     const classes = useStyles();
 
+    const dispatch = useDispatch();
+    const [Email, setEmail] = useState("")
+    const [Password, setPassword] = useState("")
+
     const onEmailHandler = (event) => {
-        console.log("email");
+        setEmail(event.currentTarget.value)
     }
+
     const onPasswordHandler = (event) => {
-        console.log("pwd");
+        setPassword(event.currentTarget.value)
     }
 
     const onSubmitHandler = (event) => {
-        console.log("submit");
+        event.preventDefault();  // 페이지 refresh 방지
+
+        let body = {
+            email: Email,
+            password: Password
+        }
+
+        dispatch(loginUser(body)).then(response => {
+            if(response.payload.loginSuccess){
+                props.history.push('/')
+            }else{
+                alert('Error');
+            }
+        });
 
     }
 
@@ -57,6 +77,7 @@ function LoginPage(props) {
                     id="standard-full-width"
                     label="비밀번호"
                     style={{ margin: 8 }}
+                    type="password"
                     placeholder="Password"
                     fullWidth
                     margin="normal"
