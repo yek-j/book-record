@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import {useDispatch} from 'react-redux';
-import {registerUser} from '../../_actions/user_action';
+import {registerUser} from '../../../_actions/user_action';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -129,7 +129,7 @@ function RegisterPage(props) {
                     value={ConfirmPassword}
                     onChange={onConfirmPassworddHandler}
                     />
-                    <Button style={{ marginTop: "10px", width: '25ch'}} variant="contained" color="primary" >Sign Up</Button>
+                    <Button style={{ marginTop: "10px", width: '25ch'}} onClick={onSubmitHandler} variant="contained" color="primary" >Sign Up</Button>
                 </form>
             </div>
         </div>

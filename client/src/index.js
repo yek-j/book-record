@@ -9,9 +9,6 @@ import promisMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import Reducer from './_reducer';
 
-
-//const createStoreWithMiddleware = applyMiddleware(promisMiddleware, ReduxThunk)(createStore);
-
 const createStoreWithMiddleware = applyMiddleware(promisMiddleware, ReduxThunk)(createStore);
 
 ReactDOM.render(
@@ -23,7 +20,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

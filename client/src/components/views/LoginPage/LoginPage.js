@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch} from 'react-redux';
-import {loginUser} from '../../_actions/user_action';
+import {loginUser} from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LoginPage(props) {
-    const classes = useStyles();
+  const classes = useStyles();
 
     const dispatch = useDispatch();
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
 
     const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value)
+       setEmail(event.currentTarget.value)
     }
 
     const onPasswordHandler = (event) => {
@@ -40,7 +40,7 @@ function LoginPage(props) {
     }
 
     const onSubmitHandler = (event) => {
-        event.preventDefault();  // 페이지 refresh 방지
+       event.preventDefault();  // 페이지 refresh 방지
 
         let body = {
             email: Email,
@@ -53,11 +53,13 @@ function LoginPage(props) {
             }else{
                 alert('Error');
             }
-        });
+        }); 
 
-    }
+    } 
+    
 
     return (
+        
         <div className={classes.root} > 
             <div>
                 <form onSubmit={onSubmitHandler} >
@@ -86,7 +88,7 @@ function LoginPage(props) {
                     }}
                     onChange={onPasswordHandler}
                     />
-                    <Button style={{ marginTop: "10px", width: '25ch'}} variant="contained" color="primary" >LogIn</Button>
+                    <Button style={{ marginTop: "10px", width: '25ch'}} onClick={onSubmitHandler} variant="contained" color="primary" >LogIn</Button>
                 </form>
             </div>
         </div>

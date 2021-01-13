@@ -19,12 +19,14 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log("MongoDB Connected.."))
 .catch(err => console.log(err));
 
+
 app.get('/', (req, res) => {
    res.send("시작"); 
 });
 
+
 // 로그인
-app.post('/users/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
     // 이메일 찾기
     User.findOne({email: req.body.email}, (err, user) => {
         //user x
@@ -54,7 +56,7 @@ app.post('/users/login', (req, res) => {
 });
 
 // 회원가입
-app.post('/users/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
   
     user.save((err, doc) => {
@@ -65,7 +67,7 @@ app.post('/users/register', (req, res) => {
     });
 })
 
-app.get('/users/auth', auth, (req,res) => {
+app.get('/api/users/auth', auth, (req,res) => {
     res.status(200).json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
@@ -78,7 +80,7 @@ app.get('/users/auth', auth, (req,res) => {
 })
 
 // 로그아웃 auth에서 인증 후 user를 가져온다
-app.get('/users/logout', auth, (req, res) => {
+app.get('/api/users/logout', auth, (req, res) => {
     User.findOneAndUpdate({_id: req.user._id}, 
       {token: ""},
       (err, user) => {
