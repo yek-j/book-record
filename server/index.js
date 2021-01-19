@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require("./config/key");
 const {User} = require("./models/User");
+const {BookRecord} = require("./models/BookRecord");
 const {auth} = require("./middleware/auth");
 const { response } = require('express');
 
@@ -65,6 +66,29 @@ app.post('/api/users/register', (req, res) => {
             success: true
         })
     });
+})
+
+// 독서기록
+app.post('/api/book/record', (req, res) => {
+    const book = new BookRecord(req.body);
+
+    book.save((err, doc) => {
+        if(err) return res.json({recordSaveSuccess: false, err})
+        return res.status(200).json({
+            recordSaveSuccess: true
+        })
+    })
+})
+
+// main 화면 독서기록표
+app.get('/api/book/read', (req, res) => {
+    BookRecord.find({ }, function(err, record) {
+        if(err) return res.json({recordReadSuccess: false, err});
+        console.log(record);
+        return res.status(200).json({
+            recordReadSuccess: true
+        })
+      });
 })
 
 app.get('/api/users/auth', auth, (req,res) => {

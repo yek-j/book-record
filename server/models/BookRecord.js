@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const bookSchema = mongoose.Schema({
-    name: {
+    bookname: {
         type: String,
         maxlength: 50
     },
@@ -14,10 +14,10 @@ const bookSchema = mongoose.Schema({
         maxlength: 300
     },
     date: {
-        type: string
+        type: String
     },
     uid: {
-        type: string,
+        type: String,
         unique: 1
     }
 })
