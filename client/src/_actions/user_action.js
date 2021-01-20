@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { response } from 'express';
 import {
     LOGIN_USER,
     REGISTER_USER,
-    AUTH_USER
+    AUTH_USER,
+    SHOW_RECORD
 } from './types';
 
 export function loginUser(dataToSubmit){
@@ -38,3 +40,13 @@ export function auth(){
             payload: request
         }
     }
+
+export function showRecord(){
+    const request = axios.get('/api/book/read')
+    .then(response => 
+        response.data)
+    return {
+        type: SHOW_RECORD,
+        payload: request
+    }
+}

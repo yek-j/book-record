@@ -17,8 +17,7 @@ const bookSchema = mongoose.Schema({
         type: String
     },
     uid: {
-        type: String,
-        unique: 1
+        type: String
     }
 })
 

@@ -4,7 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 function BookRecord(props) {
-
+   
   
     return (
         <div>
@@ -13,7 +13,10 @@ function BookRecord(props) {
                 <TableCell>저자</TableCell>  
                 <TableCell>한줄 감상</TableCell>  
                 <TableCell>읽은날</TableCell>     
-            </TableRow>       
+            </TableRow>  
+            <TableRow>
+                <TableCell></TableCell>    
+            </TableRow>     
         </div>
     );
 }
