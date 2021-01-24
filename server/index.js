@@ -84,8 +84,11 @@ app.post('/api/book/record', (req, res) => {
 app.get('/api/book/read', (req, res) => {
     BookRecord.find({ }, function(err, record) {
         if(err) return res.json({recordReadSuccess: false, err});
-       
-       return res.json(record);
+   //    console.log(record);
+       return res.json({
+
+          record
+       });
 
       });
 })

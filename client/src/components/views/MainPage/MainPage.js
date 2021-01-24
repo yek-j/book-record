@@ -9,20 +9,29 @@ import TableCell from '@material-ui/core/TableCell';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+ //  console.log(response.data.record[0].bookname);
+       //   console.log(this.state.record.map(item=> item.bookname))
+           
 import axios from 'axios';
 
 class MainPage extends React.Component{
- 
-    componentDidMount() {
-        console.log('독서기록 DB')
-        const request = axios.get('/api/book/read')
-        .then(response => 
-            response.data);
-        console.log(request);     
-    }
+    state = {ItemList: []};
 
+    showItem = async () => {
+        axios.get('/api/book/read').then(({data}) => {
+           this.setState({ItemList: data.record});
+     })
+     .catch(e=>{ 
+        console.log(e);
+     })
+    };
+
+    componentDidMount() {
+        this.showItem(); 
+    }
+   
    render(){ 
+
        return (
             <div>
                 <Box clone color="primary.main">
@@ -30,7 +39,7 @@ class MainPage extends React.Component{
                     
                  </Box>
                  <Box clone color="primary.main">
-                    <Button  href="/" color="secondary">글쓰기</Button>
+                   <Button  href="/write" color="secondary">글쓰기</Button>      
                  </Box>
                 <Table>
                 <TableHead>
@@ -42,6 +51,17 @@ class MainPage extends React.Component{
                         </TableRow> 
                     </TableHead> 
                     <TableBody>
+                        
+                    {
+                        this.state.ItemList.map(item =>
+                            <TableRow>
+                                <TableCell>{item.bookname}</TableCell> 
+                                <TableCell>{item.author}</TableCell>
+                                <TableCell>{item.record}</TableCell>
+                                <TableCell>{item.date}</TableCell>
+                          </TableRow> 
+                        )
+                    }
                         
                     </TableBody>
                 </Table>      

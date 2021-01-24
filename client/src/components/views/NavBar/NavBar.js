@@ -21,14 +21,16 @@ function NavBar(props){
         })
     }
 
-    const user = useSelector(state => state.user)
-
-    if(user.loginSuccess){
-        button =  <Button color="inherit" onClick={onClickHandler}>로그아웃</Button>
-    } else {
+    const user = useSelector(state => state.user.userData)
+    if(user != null){
+        if(user.isAuth){
+            button =  <Button color="inherit" onClick={onClickHandler}>로그아웃</Button>
+        } else {
+            button =  <Button color="inherit" href="/login">로그인</Button>
+         }
+    }else{
         button =  <Button color="inherit" href="/login">로그인</Button>
-     }
-     
+    }
     return (
         <div>
             <AppBar position="static">

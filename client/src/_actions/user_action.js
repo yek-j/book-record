@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { response } from 'express';
 import {
     LOGIN_USER,
     REGISTER_USER,
     AUTH_USER,
-    SHOW_RECORD
+    BOOK_RECORD
 } from './types';
 
 export function loginUser(dataToSubmit){
@@ -41,12 +40,14 @@ export function auth(){
         }
     }
 
-export function showRecord(){
-    const request = axios.get('/api/book/read')
-    .then(response => 
-        response.data)
-    return {
-        type: SHOW_RECORD,
-        payload: request
+
+ export function bookRecord(dataToSubmit){
+     const request = axios.post('/api/book/record', dataToSubmit)
+        .then(response => 
+            response.data);
+        // reducer로 넘기기
+        return {
+            type: BOOK_RECORD,
+            payload: request
+        }
     }
-}
