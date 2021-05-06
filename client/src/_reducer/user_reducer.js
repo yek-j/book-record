@@ -16,9 +16,6 @@ function user(state = {}, action) {
         case AUTH_USER:
             return { ...state, userData: action.payload }
             break;
-        case BOOK_RECORD:
-            return { ...state, recordSuccess: action.payload}
-            break;
         default:
             return state;
     }

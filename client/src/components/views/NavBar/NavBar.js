@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
@@ -9,7 +8,6 @@ import { useSelector } from "react-redux";
 
 function NavBar(props){
 
-    let button
     const onClickHandler = () => {
         axios.get('/api/users/logout')
         .then(response => {
@@ -21,33 +19,44 @@ function NavBar(props){
         })
     }
 
-    const user = useSelector(state => state.user.userData)
-    if(user != null){
-        if(user.isAuth){
-            button =  <Button color="inherit" onClick={onClickHandler}>로그아웃</Button>
-        } else {
-            button =  <Button color="inherit" href="/login">로그인</Button>
-         }
-    }else{
-        button =  <Button color="inherit" href="/login">로그인</Button>
+    const user = useSelector(state => state.user)
+
+    const loginButton = [<Button color="inherit" href="/login">로그인</Button>, <Button color="inherit" href="/register">회원가입</Button>]
+    const logoutButton = [<Button color="inherit" onClick={onClickHandler}>로그아웃</Button>]
+
+    if(user.userData && !user.userData.isAuth){
+        return (
+            <div>
+                <AppBar position="static">
+                    <ToolBar>
+                        <Button color="inherit" href="/">BookRecord</Button>
+                        <Box style={style}></Box>
+                        {loginButton}
+                        
+                    </ToolBar>
+                </AppBar>
+            </div>
+        )
+    }else {
+        return (
+            <div>
+                <AppBar position="static">
+                    <ToolBar>
+                        <Button color="inherit" href="/">BookRecord</Button>
+                        <Box style={style}></Box>
+                        {logoutButton}
+                        
+                    </ToolBar>
+                </AppBar>
+            </div>
+        )
     }
-    return (
-        <div>
-            <AppBar position="static">
-                <ToolBar>
-                    <Button color="inherit" href="/">BookRecord</Button>
-                    <Box style={style}></Box>
-                    {button}
-                    <Button color="inherit" href="/register">회원가입</Button>
-                </ToolBar>
-            </AppBar>
-        </div>
-    )
+    
 }
 
 const style = {
     flexGrow: 1
 }
 
-export default withRouter(NavBar)
+export default NavBar
 

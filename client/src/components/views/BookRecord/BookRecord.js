@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import {useDispatch} from 'react-redux';
-import {bookRecord} from '../../../_actions/user_action';
+import axios from 'axios';
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,10 +26,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WritePage(props) {
-    const user = useSelector(state => state.user.userData)
+    const user = useSelector(state => state.user)
     const classes = useStyles();
     
-    const dispatch = useDispatch();
     const [Bookname, setBookname] = useState("")
     const [Author, setAuthor] = useState("")
     const [Record, setRecord] = useState("")
@@ -55,20 +54,21 @@ function WritePage(props) {
         event.preventDefault();  // 페이지 refresh 방지
        // console.log(user.name);
         let body = {
+            writer: user.userData._id,
             bookname: Bookname,
             author: Author,
             record: Record,
-            date: Date,
-            uid: user.name
+            date: Date
         }
 
-        dispatch(bookRecord(body)).then(response => {
-            if(response.payload.recordSuccess){
-                props.history.push('/')
-            }else{
-                alert('Error');
-            }
-        }); 
+        axios.post('/api/book/record', body)
+            .then(response => {
+                if(response.data.success){
+                    props.history.push('/')
+                }else{
+                    alert("기록 실패!");
+                }
+            })
     }
 
 

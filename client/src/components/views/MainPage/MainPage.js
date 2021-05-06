@@ -1,36 +1,60 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux'
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-//import BookRecord from '../BookRecord/BookRecord';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
- //  console.log(response.data.record[0].bookname);
-       //   console.log(this.state.record.map(item=> item.bookname))
            
 import axios from 'axios';
 
-class MainPage extends React.Component{
-    state = {ItemList: []};
+function MainPage(){
 
-    showItem = async () => {
-        axios.get('/api/book/read').then(({data}) => {
-           this.setState({ItemList: data.record});
-     })
-     .catch(e=>{ 
-        console.log(e);
-     })
-    };
+    
+   const user = useSelector(state => state.user)
+    const [readBook, setreadBook] = useState([]);
 
-    componentDidMount() {
-        this.showItem(); 
-    }
-   
-   render(){ 
+    useEffect(() => {
+        axios.get('/api/book/read')
+        .then(response => {
+            if(response.data.success){
+                setreadBook(response.data.record);
+            }else {
+                alert('글을 가져오는데 실패')
+            }
+        })
+
+        const data = {
+            writer: user.userData._id
+        } 
+
+        axios.post('/api/book/delete')
+        .then(response => {
+            if(response.data.success){
+
+            }else {
+                alert('글 삭제에 실패했습니다')
+            }
+        })
+
+    }, [readBook])
+
+    const bookRecords = readBook.map((record, index) => {
+        return <TableRow>
+            <TableCell>{record.bookname}</TableCell>
+            <TableCell>{record.author}</TableCell>
+            <TableCell>{record.record}</TableCell>
+            <TableCell>{record.date}</TableCell>
+            
+            <TableCell>
+                <Button variant="contained" color="secondary">삭제</Button> &nbsp;
+                <Button variant="outlined" color="secondary">수정</Button>
+            </TableCell>
+        </TableRow>
+    }) 
 
        return (
             <div>
@@ -39,36 +63,28 @@ class MainPage extends React.Component{
                     
                  </Box>
                  <Box clone color="primary.main">
-                   <Button  href="/write" color="secondary">글쓰기</Button>      
+                   <Button  href="/write"  color="secondary">글쓰기</Button>      
                  </Box>
+                 <hr />
                 <Table>
-                <TableHead>
+                    <TableHead>
                         <TableRow>
                             <TableCell>이름</TableCell> 
                             <TableCell>저자</TableCell>  
                             <TableCell>한줄 감상</TableCell>  
-                            <TableCell>날짜</TableCell>     
+                            <TableCell>날짜</TableCell>    
+                            <TableCell></TableCell>   
                         </TableRow> 
                     </TableHead> 
                     <TableBody>
                         
-                    {
-                        this.state.ItemList.map(item =>
-                            <TableRow>
-                                <TableCell>{item.bookname}</TableCell> 
-                                <TableCell>{item.author}</TableCell>
-                                <TableCell>{item.record}</TableCell>
-                                <TableCell>{item.date}</TableCell>
-                          </TableRow> 
-                        )
-                    }
+                        {bookRecords}
                         
                     </TableBody>
                 </Table>      
             </div>
         );
-    }   
 }
 
 
-export default withRouter(MainPage)
+export default MainPage

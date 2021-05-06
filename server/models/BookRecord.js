@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const bookSchema = mongoose.Schema({
+    writer:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
     bookname: {
         type: String,
         maxlength: 50
@@ -15,11 +20,8 @@ const bookSchema = mongoose.Schema({
     },
     date: {
         type: String
-    },
-    uid: {
-        type: String
     }
-})
+}, {timestamps:true})
 
 const BookRecord = mongoose.model('BookRecord', bookSchema)
 
