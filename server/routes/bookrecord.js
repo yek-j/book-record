@@ -29,7 +29,7 @@ router.get('/read', (req, res) => {
 
 // 작성한 유저가 자신의 기록 삭제
 router.post('/delete', (req, res) => {
-    
+    console.log(req.body);
 })
 
 module.exports = router;

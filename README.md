@@ -1,2 +1,2 @@
 # book-record
-### 강의 복습용
+### react, nodejs

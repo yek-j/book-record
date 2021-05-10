@@ -42,7 +42,8 @@ function NavBar(props){
             <div>
                 <AppBar position="static">
                     <ToolBar>
-                        <Button color="inherit" href="/">BookRecord</Button>
+                        <Button color="inherit" href="/">BookRecord</Button>   |
+                        <Button color="inherit" href="/mybook">myBookPage</Button>
                         <Box style={style}></Box>
                         {logoutButton}
                         
