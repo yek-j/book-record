@@ -49,7 +49,9 @@ function LoginPage(props) {
 
         dispatch(loginUser(body)).then(response => {
             if(response.payload.loginSuccess){
-                props.history.push('/')
+                console.log(response.payload);
+                window.localStorage.setItem('userId', response.payload.userID);
+                props.history.push("/");
             }else{
                 alert('Error');
             }

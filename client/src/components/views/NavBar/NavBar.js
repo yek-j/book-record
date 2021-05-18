@@ -5,6 +5,7 @@ import ToolBar from '@material-ui/core/ToolBar';
 import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
 import { useSelector } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 function NavBar(props){
 
@@ -18,7 +19,7 @@ function NavBar(props){
             }
         })
     }
-
+    
     const user = useSelector(state => state.user)
 
     const loginButton = [<Button color="inherit" href="/login">로그인</Button>, <Button color="inherit" href="/register">회원가입</Button>]
@@ -43,7 +44,7 @@ function NavBar(props){
                 <AppBar position="static">
                     <ToolBar>
                         <Button color="inherit" href="/">BookRecord</Button>   |
-                        <Button color="inherit" href="/mybook">myBookPage</Button>
+                        <Button color="inherit" href="/mypage">myBookPage</Button>
                         <Box style={style}></Box>
                         {logoutButton}
                         
@@ -59,5 +60,5 @@ const style = {
     flexGrow: 1
 }
 
-export default NavBar
+export default withRouter(NavBar)
 

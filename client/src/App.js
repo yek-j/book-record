@@ -11,8 +11,9 @@ import MainPage from "./components/views/MainPage/MainPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import BookRecord from "./components/views/BookRecord/BookRecord";
-import LandingPage from "./components/views/LandingPage/LandingPage";
 import Auth from './hoc/auth';
+import MyPage from './components/views/MyPage/MyPage';
+import Update from './components/views/MyPage/Sections/Update'
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
         <Route exact path="/login" component={Auth(LoginPage, false)} />
         <Route exact path="/register" component={Auth(RegisterPage, false)} />
         <Route exact path="/write" component={Auth(BookRecord, true)} />
-        <Route exact path="/mybook" component={Auth(LandingPage, true)} />
+        <Route exact path="/mypage" component={Auth(MyPage, true)} />
+        <Route exact path="/update" component={Auth(Update, true)} />
       </Switch>
     </div>
   </Router>

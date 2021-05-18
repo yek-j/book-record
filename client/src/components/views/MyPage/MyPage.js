@@ -6,39 +6,54 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';         
+import Button from '@material-ui/core/Button';
+import Delete from './Sections/Delete';         
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
-function LandingPage(props) {
-    const [readBook, setreadBook] = useState([]);
+function MyPage(props) {
+    const [myreadBook, setmyreadBook] = useState([]);
+
+    const variable = { writer: localStorage.getItem('userId')}
 
     useEffect(() => {
 
-        axios.get('/api/book/read')
+       // console.log(user.userData)
+        axios.post('/api/book/myRead', variable)
         .then(response => {
             if(response.data.success){
-                setreadBook(response.data.record);
-            }else {
-                alert('글을 가져오는데 실패')
+                setmyreadBook(response.data.myread);
             }
         })
 
-    }, [])
+    }, [myreadBook])
 
-    const bookRecords = readBook.map((record, index) => {
+
+
+    const bookRecords = myreadBook.map((record, index) => {
         return <TableRow>
             <TableCell>{record.bookname}</TableCell>
             <TableCell>{record.author}</TableCell>
             <TableCell>{record.record}</TableCell>
             <TableCell>{record.date}</TableCell>
-            <TableCell>{record.writer.name}</TableCell>
+            <TableCell>
+                { 
+                    <div>
+                        <Delete bookId={record._id}/> &nbsp;
+                        <Button variant="outlined" color="secondary" onClick={()=>{props.history.push({
+                            pathname: "/update",
+                            state: {bookId: record._id}
+                        })}}>수정</Button>
+                    </div>
+                }
+            </TableCell>
         </TableRow>
     }) 
 
        return (
             <div>
                 <Box clone color="primary.main">
-                    <Typography variant="inherit">독서기록장</Typography>
+                    <Typography variant="inherit">MY 독서기록장</Typography>
                     
                  </Box>
                  <Box clone color="primary.main">
@@ -52,7 +67,7 @@ function LandingPage(props) {
                             <TableCell>저자</TableCell>  
                             <TableCell>한줄 감상</TableCell>  
                             <TableCell>날짜</TableCell>    
-                            <TableCell>작성자</TableCell>   
+                            <TableCell>삭제 및 수정</TableCell>   
                         </TableRow> 
                     </TableHead> 
                     <TableBody>
@@ -65,4 +80,4 @@ function LandingPage(props) {
         );
 }
 
-export default LandingPage
+export default withRouter(MyPage)
